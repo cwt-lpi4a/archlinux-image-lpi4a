@@ -1,0 +1,10 @@
+label: gpt
+label-id: 02724569-E424-4B72-A33A-1CB988BB252C
+device: LOOP_DEVICE
+unit: sectors
+first-lba: 34
+sector-size: 512
+
+LOOP_DEVICE : start=          34, size=        4062, type=0FC63DAF-8483-4772-8E79-3D69D8477DE4, uuid=B1BDF0C8-8FB4-4ED8-8175-A3282CD9FBEC, name="unused"
+LOOP_DEVICE : start=        4096, size=     1024000, type=0FC63DAF-8483-4772-8E79-3D69D8477DE4, uuid=9D0AE3B7-2621-45A5-A894-71D93F179162, name="boot"
+LOOP_DEVICE : start=     1028096,                    type=0FC63DAF-8483-4772-8E79-3D69D8477DE4, uuid=80A5A8E9-C744-491A-93C1-4F4194FD690B, name="rootfs"
