@@ -1,6 +1,9 @@
 # Arch Linux SD Card Image for LicheePi 4A
 Build script to create the Arch Linux image for [LicheePi 4A](https://sipeed.com/licheepi4a).
 
+## License
+This build script is released under the MIT License. See the [LICENSE](LICENSE) file for details.
+
 ## Image Details
 - **File format**: Zstd compressed raw disk image (.img.zst)
 - **Target**: SD card boot
