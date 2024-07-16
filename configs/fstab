@@ -14,8 +14,10 @@ LABEL=LPi4A /home                 btrfs defaults,discard=async,compress=lzo,user
 LABEL=LPi4A /var/cache/pacman/pkg btrfs defaults,discard=async,compress=lzo,user_subvol_rm_allowed,subvol=@pkg       0 1
 LABEL=LPi4A /var/log              btrfs defaults,discard=async,compress=lzo,user_subvol_rm_allowed,subvol=@log       0 1
 LABEL=LPi4A /.snapshots           btrfs defaults,discard=async,compress=lzo,user_subvol_rm_allowed,subvol=@snapshots 0 1
+LABEL=SWAP  swap                   swap defaults,discard                                                             0 0
 tmpfs       /tmp                  tmpfs defaults                                                                     0 0
 tmpfs       /var/tmp              tmpfs defaults                                                                     0 0
+
 
 LABEL=LPi4A /mnt                  btrfs noauto,discard=async,compress=lzo,subvol=/                                   0 1
 

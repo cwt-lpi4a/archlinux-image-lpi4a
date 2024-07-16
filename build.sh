@@ -87,8 +87,11 @@ TARGET=${DATA}/${BUILD}
 PKGS=${DATA}/pkgs
 
 # Prepare build directory
+ZR=$(sudo zramctl -f --size=10G)
+sudo mkfs.ext4 ${ZR}
+sudo mount ${ZR} ${DATA}
 sudo mkdir -p ${DATA}
-sudo chown $(id -u):$(id -g) ${DATA}
+sudo chown -R $(id -u):$(id -g) ${DATA}
 mkdir -p ${PKGS}
 
 # Download rootfs
@@ -118,19 +121,22 @@ ${WGET} ${PKGS}/${VPU_PKG} ${VPU_URL}
 # Setup disk image
 cd ${WORK_DIR}
 rm -f ${IMAGE}
-fallocate -l 2500M ${IMAGE}
+fallocate -l 7G ${IMAGE}
 LOOP=$(sudo losetup -f -P --show "${IMAGE}")
 cat parts.txt | sed -e "s#LOOP_DEVICE#${LOOP}#g" | sudo sfdisk ${LOOP}
 
 # Format boot partition
 sudo mkfs.ext4 -L BOOT ${LOOP}p2
 
+# Set up a Linux swap area
+sudo mkswap -L SWAP ${LOOP}p3
+
 # Format root partition
-sudo mkfs.btrfs --csum xxhash -L LPi4A ${LOOP}p3
+sudo mkfs.btrfs --csum xxhash -L LPi4A ${LOOP}p4
 
 # Setup target mount
 sudo mkdir -p ${TARGET}
-sudo mount -o discard=async,compress=lzo ${LOOP}p3 ${TARGET}
+sudo mount -o discard=async,compress=lzo ${LOOP}p4 ${TARGET}
 VOLUMES="@ @home @pkg @log @snapshots"
 for volume in ${VOLUMES}; do
 	sudo btrfs subvolume create ${TARGET}/${volume}
@@ -143,7 +149,7 @@ VOLUMES="@:${TARGET} @home:${TARGET}/home\
 for volume in ${VOLUMES}; do
 	IFS=: read -r subvol mnt <<< ${volume}
 	sudo mkdir -p ${mnt}
-	sudo mount -o discard=async,compress=lzo,subvol=${subvol} ${LOOP}p3 ${mnt}
+	sudo mount -o discard=async,compress=lzo,subvol=${subvol} ${LOOP}p4 ${mnt}
 done
 
 # Mount packages cache as tmpfs
