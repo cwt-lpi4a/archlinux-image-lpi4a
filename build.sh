@@ -12,7 +12,7 @@ ROOTFS=https://riscv.mirror.pkgbuild.com/images/archriscv-2024-03-30.tar.zst
 
 # Kernel & Headers
 KERNEL_REL=1
-KERNEL_GIT=r263.719387f85
+KERNEL_GIT=r277.f6b3a51da
 
 KERNEL_PKG=linux-cwt-510-thead-lpi4a-${KERNEL_GIT}-${KERNEL_REL}-riscv64.pkg.tar.zst
 KERNEL_URL=${GITHUB}/linux-cwt-thead-lpi4a/releases/download/${KERNEL_GIT}-${KERNEL_REL}/${KERNEL_PKG}
@@ -33,7 +33,7 @@ LPi4A_BLTH_URL=${GITHUB}/lpi4a-bt/releases/download/${REVY_MKIMG_VER}-${LPi4A_BL
 
 # TH1520 Boot Firmware & OpenSBI
 BOOT_FRMW_REL=1
-BOOT_FRMW_GIT=r8.c5ab818
+BOOT_FRMW_GIT=r9.bc5d334
 
 BOOT_FRMW_PKG=th1520-boot-firmware-${BOOT_FRMW_GIT}-${BOOT_FRMW_REL}-riscv64.pkg.tar.zst
 BOOT_FRMW_URL=${GITHUB}/th1520-boot-firmware/releases/download/${BOOT_FRMW_GIT}-${BOOT_FRMW_REL}/${BOOT_FRMW_PKG}
@@ -53,11 +53,23 @@ DDX_GIT=r27.e3b21e5
 DDX_PKG=xf86-video-thead-${DDX_GIT}-${DDX_REL}-riscv64.pkg.tar.zst
 DDX_URL=${GITHUB}/xf86-video-thead/releases/download/${DDX_GIT}-${DDX_REL}/${DDX_PKG}
 
+# TH1520 DDK117
+DDK_REL=1
+DDK_VER=21.2.1+2revyos2+glvnd
+DDK_PKG=mesa-pvr-ddk117-${DDK_VER}-${DDK_REL}-riscv64.pkg.tar.zst
+DDK_URL=${GITHUB}/mesa-pvr-ddk117/releases/download/${DDK_VER}-${DDK_REL}/${DDK_PKG}
+
 # TH1520 VPU
 VPU_REL=1
-VPU_GIT=r3.c700124
+VPU_GIT=r4.b9baefa
 VPU_PKG=th1520-vpu-${VPU_GIT}-${VPU_REL}-riscv64.pkg.tar.zst
 VPU_URL=${GITHUB}/th1520-vpu/releases/download/${VPU_GIT}-${VPU_REL}/${VPU_PKG}
+
+# TH1520 NPU
+NPU_REL=3
+NPU_GIT=r2.492b7e6
+NPU_PKG=th1520-npu-${NPU_GIT}-${NPU_REL}-riscv64.pkg.tar.zst
+NPU_URL=${GITHUB}/th1520-npu/releases/download/${NPU_GIT}-${NPU_REL}/${NPU_PKG}
 
 # Target packages
 PACKAGES="base btrfs-progs chrony clinfo compsize dosfstools mtd-utils networkmanager openssh rng-tools\
@@ -115,8 +127,14 @@ ${WGET} ${PKGS}/${GPU_PKG} ${GPU_URL}
 # Download TH1520 DDX
 ${WGET} ${PKGS}/${DDX_PKG} ${DDX_URL}
 
+# Download TH1520 DDK117
+${WGET} ${PKGS}/${DDK_PKG} ${DDK_URL}
+
 # Download TH1520 VPU
 ${WGET} ${PKGS}/${VPU_PKG} ${VPU_URL}
+
+# Download TH1520 NPU
+${WGET} ${PKGS}/${NPU_PKG} ${NPU_URL}
 
 # Setup disk image
 cd ${WORK_DIR}
